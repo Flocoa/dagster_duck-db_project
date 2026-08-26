@@ -1,0 +1,7 @@
+version: 2
+
+sources:
+  - name: raw_sncf
+    schema: raw
+    tables:
+      - name: raw_tgv_regularity
