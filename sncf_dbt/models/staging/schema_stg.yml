@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_tgv_regularity
+    description: "Table de staging pour les données de régularité TGV"
+    columns:
+      - name: month
+        description: "Mois de la donnée"
+        tests:
+          - not_null
+          - unique
+      - name: year
+        description: "Année de la donnée"
+      - name: punctuality_rate
+        description: "Taux de ponctualité"
