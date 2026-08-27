@@ -31,6 +31,16 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   sncf_dbt:
-    # Config indicated by + and applies to all files under models/example/
-    example:
+    +materialized: view
+    staging:
       +materialized: view
+      +schema: stg
+      +tags: ['stg']
+    intermediate:
+      +materialized: view
+      +schema: int
+      +tags: ['int']
+    marts:
+      +materialized: table
+      +schema: mart
+      +tags: ['mart']

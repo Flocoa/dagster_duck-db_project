@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: tgv_monthly_performance
+    description: "Indicateurs mensuels de performance et régularité des lignes TGV (annulations, retards et causes)."
+    columns:
+      - name: journey_month
+        description: "Mois du trajet au format YYYY-MM."
+        tests:
+          - not_null
+
+      - name: train_service
+        description: "Type de service TGV (ex: National, International, Axe Nord, etc.)."
+        tests:
+          - not_null
+
+      - name: departure_station
+        description: "Gare de départ de la ligne."
+        tests:
+          - not_null
+
+      - name: arrival_station
+        description: "Gare d'arrivée de la ligne."
+        tests:
+          - not_null
+
+      # --- Volumes ---
+      - name: scheduled_trains_count
+        description: "Nombre total de trains prévus sur le mois."
+
+      - name: canceled_trains_count
+        description: "Nombre de trains annulés sur le mois."
+
+      - name: delayed_arrivals_count
+        description: "Nombre de trains arrivés avec du retard."
+
+      # --- Taux calculés ---
+      - name: cancellation_rate_pct
+        description: "Pourcentage de trains annulés par rapport au nombre prévu."
+
+      - name: delay_rate_pct
+        description: "Pourcentage de trains arrivés en retard par rapport au nombre prévu."
+
+      # --- Retard moyen ---
+      - name: avg_delay_arrivals_minutes
+        description: "Retard moyen à l'arrivée en minutes pour l'ensemble des trains."
+
+      # --- Causes de retard (Répartition %) ---
+      - name: pct_cause_external
+        description: "Part du retard dû à des causes externes (ex: météo, obstacles)."
+
+      - name: pct_cause_infrastructure
+        description: "Part du retard dû à l'infrastructure réseau (ex: voies, signalisation)."
+
+      - name: pct_cause_traffic_management
+        description: "Part du retard dû à la gestion du trafic (ex: circulation)."
+
+      - name: pct_cause_rolling_stock
+        description: "Part du retard dû au matériel roulant (ex: panne de rame)."
+
+      - name: pct_cause_station_management
+        description: "Part du retard dû à la gestion en gare."
+
+      - name: pct_cause_passenger_care
+        description: "Part du retard dû à la prise en charge des voyageurs (ex: affluence, malaises)."

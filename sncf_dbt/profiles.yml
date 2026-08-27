@@ -1,0 +1,64 @@
+connection_gbq:
+  outputs:
+    dev:
+      dataset: main
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      keyfile: /home/flocoa/code/exemple_cours/service_account_key_gbq_dbt.json
+      location: EU
+      method: service-account
+      priority: interactive
+      project: dbt-project-467318
+      threads: 4
+      type: bigquery
+  target: dev
+greenweez_dbt:
+  outputs:
+    dev:
+      path: dev_database.duckdb
+      threads: 1
+      type: duckdb
+    prod:
+      path: prod.duckdb
+      threads: 4
+      type: duckdb
+  target: dev
+jaffle_shop_dbt:
+  outputs:
+    dev:
+      path: dev.duckdb
+      threads: 1
+      type: duckdb
+    prod:
+      path: prod.duckdb
+      threads: 4
+      type: duckdb
+  target: dev
+salesmotion_dbt:
+  outputs:
+    dev:
+      dataset: dbt_sales_motion
+      job_execution_timeout_seconds: 120
+      job_retries: 1
+      keyfile: /home/flocoa/code/Projets/projet_api/sales-motion-project-a5a684bbd7c3.json
+      location: EU
+      method: service-account
+      priority: interactive
+      project: sales-motion-project
+      threads: 4
+      type: bigquery
+  target: dev
+
+sncf_dbt:
+  outputs:
+    dev:
+      type: duckdb
+      path: /home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_data.duckdb
+      threads: 1
+
+    prod:
+      type: duckdb
+      path: /home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_data_prod.duckdb
+      threads: 4
+
+  target: dev

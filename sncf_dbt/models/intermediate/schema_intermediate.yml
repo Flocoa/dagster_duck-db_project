@@ -1,0 +1,11 @@
+version : 2
+
+models:
+  - name:  int_tgv_monthly
+    description: table intermédiaire pour les données de performance et régularité TGV
+    columns:
+      - name: unique_key
+        description: "Clé unique pour chaque ligne de performance TGV (concaténation de journey_month, train_service, departure_station, arrival_station)."
+        tests:
+          - not_null
+          - unique
