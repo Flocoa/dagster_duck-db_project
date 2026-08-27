@@ -40,14 +40,13 @@ projet_duck-db_dagster_dbt/
 │   ├── assets.py           # Définition de l'asset d'ingestion & assets dbt
 │   └── __init__.py         # Définitions globales, Jobs & Schedules
 ├── sncf_dbt/               # Projet de transformations dbt
-│   ├── models/
-│   │   ├── staging/        # Modèles de staging & schema.yml (tests)
-│   │   ├── intermediate/   # Modèles intermédiaires (surrogate keys)
-│   │   └── marts/          # Tables de faits / Datamarts analytiques
-│   ├── dbt_project.yml
-│   └── profiles.yml        # Configuration de connexion DuckDB
+│   ├── models/             # Data layers
+│   │   ├── staging/
+│   │   ├── intermediate/
+│   │   └── marts/
+│   └── dbt_project.yml     # Structure des dataset
 ├── sncf_data.duckdb        # Base de données DuckDB locale (non versionnée)
-├── pyproject.toml
+├── pyproject.toml          # Dépendances du projet
 └── README.md
 ```
 ---
