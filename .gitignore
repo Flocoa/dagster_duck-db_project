@@ -1,5 +1,15 @@
+# Dossiers de build et de dépendances dbt
 target/
 dbt_packages/
 logs/
+
+# Fichiers de configuration et d'environnement
 .venv/
 .venvsource/
+
+# Dossiers temporaires Dagster
+.tmp_dagster_home_*
+
+# Base de données locale DuckDB (si tu ne veux pas la committer)
+*.duckdb
+*.duckdb.wal
