@@ -1,34 +1,41 @@
-#Import des libraries nécessaires
-
-import os
+from pathlib import Path
 import duckdb
+import pandas as pd
 import requests
-from dagster import asset
 
-# API SNCF pour récupérer les données de régularité TGV
+from dagster import asset, AssetExecutionContext
+from dagster_dbt import DbtCliResource, dbt_assets, DbtProject
+
+# Chemins
+PROJECT_ROOT = Path(__file__).parent.parent
+DB_PATH = str(PROJECT_ROOT / "sncf_data.duckdb")
+DBT_PROJECT_DIR = PROJECT_ROOT / "sncf_dbt"
+
+# Initialisation simple (profiles.yml est maintenant présent dans DBT_PROJECT_DIR)
+dbt_project = DbtProject(
+    project_dir=DBT_PROJECT_DIR,
+    packaged_project_dir=DBT_PROJECT_DIR,
+)
+dbt_project.prepare_if_dev()
+
+# --- ASSET INGESTION ---
 SNCF_API_URL = "https://ressources.data.sncf.com/api/explore/v2.1/catalog/datasets/regularite-mensuelle-tgv-aqst/exports/json"
 
 @asset
-def raw_sncf_tgv_data():
-    """téléchargement des données brutes de régularité TGV depuis l'API SNCF et stockage dans DuckDB"""
-
-    # Call API
+def raw_tgv_regularity():
+    """Télécharge les données brutes SNCF et les stocke dans DuckDB."""
     response = requests.get(SNCF_API_URL)
-    response.raise_for_status() # bloque directement l'exécution si la requête échoue (erreur 4xx ou 5xx)
+    response.raise_for_status()
     data = response.json()
 
-    # Connexion à DuckDB
-    db_path = "sncf_data.duckdb"
-    conn = duckdb.connect(db_path)
-
-    # Ingestion dans la table raw_tgv_regularity sur duckdb
-    import pandas as pd
     df = pd.DataFrame(data)
 
+    conn = duckdb.connect(DB_PATH)
     conn.execute("CREATE SCHEMA IF NOT EXISTS raw;")
     conn.execute("CREATE OR REPLACE TABLE raw.raw_tgv_regularity AS SELECT * FROM df;")
+    conn.close()
 
-    row_count = conn.execute("SELECT COUNT(*) FROM raw.raw_tgv_regularity").fetchone()[0] # va chercher le nombre de lignes insérées dans la table raw.raw_tgv_regularity
-    conn.close() #ferme duckdb
-
-    print(f"{row_count} lignes insérées dans raw.raw_tgv_regularity")
+# --- ASSETS DBT ---
+@dbt_assets(manifest=dbt_project.manifest_path)
+def sncf_dbt_assets(context: AssetExecutionContext, dbt: DbtCliResource):
+    yield from dbt.cli(["build"], context=context).stream()

@@ -1,0 +1,279 @@
+[32m2026-08-27 10:13:36 +0200[0m - dagster - [34mDEBUG[0m - full_sncf_pipeline - 802e5a35-17fd-4198-a4f8-5dd847e75e5f - 273852 - LOGS_CAPTURED - Capturing logs for process (pid: 273852).
+[32m2026-08-27 10:13:36 +0200[0m - dagster - [34mDEBUG[0m - full_sncf_pipeline - 802e5a35-17fd-4198-a4f8-5dd847e75e5f - 273852 - sncf_dbt_assets - STEP_START - Started execution of step "sncf_dbt_assets".
+[32m2026-08-27 10:13:36 +0200[0m - dagster - [34mINFO[0m - full_sncf_pipeline - 802e5a35-17fd-4198-a4f8-5dd847e75e5f - sncf_dbt_assets - A dbt subsetted execution is not being performed. Using the default dbt selection arguments `['--select', 'fqn:*']`.
+[32m2026-08-27 10:13:44 +0200[0m - dagster - [34mINFO[0m - full_sncf_pipeline - 802e5a35-17fd-4198-a4f8-5dd847e75e5f - sncf_dbt_assets - Copying `/home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_dbt/target/partial_parse.msgpack` to `/home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_dbt/target/sncf_dbt_assets-802e5a3-7f4edf1/partial_parse.msgpack` to take advantage of partial parsing.
+[32m2026-08-27 10:13:44 +0200[0m - dagster - [34mINFO[0m - full_sncf_pipeline - 802e5a35-17fd-4198-a4f8-5dd847e75e5f - sncf_dbt_assets - Running dbt command: `dbt build --select fqn:*`.
+[32m2026-08-27 10:13:49 +0200[0m - dagster - [34mINFO[0m - full_sncf_pipeline - 802e5a35-17fd-4198-a4f8-5dd847e75e5f - sncf_dbt_assets - Finished dbt command: `dbt build --select fqn:*`.
+[32m2026-08-27 10:13:49 +0200[0m - dagster - [34mERROR[0m - [31mfull_sncf_pipeline - 802e5a35-17fd-4198-a4f8-5dd847e75e5f - 273852 - sncf_dbt_assets - STEP_FAILURE - Execution of step "sncf_dbt_assets" failed.
+
+dagster_dbt.errors.DagsterDbtCliRuntimeError: The dbt CLI process with command
+
+`dbt build --select fqn:*`
+
+failed with exit code `2`. Check the stdout in the Dagster compute logs for the full information about the error, or view the dbt debug log: /home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_dbt/target/sncf_dbt_assets-802e5a3-7f4edf1/dbt.log.
+
+Errors parsed from dbt logs:
+
+Encountered an error:
+IO Error: Could not set lock on file "/home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_data.duckdb": Conflicting lock is held in /home/flocoa/.pyenv/versions/3.12.9/bin/python3.12 (PID 275406). See also https://duckdb.org/docs/stable/connect/concurrency
+
+Traceback (most recent call last):
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 95, in exception_handler
+    yield
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/sql/connections.py", line 147, in add_query
+    cursor = connection.handle.cursor()
+             ^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 96, in handle
+    self._handle.resolve(self)
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 120, in resolve
+    return self.opener(connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 53, in open
+    connection.handle = cls._ENV.handle()
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/local.py", line 75, in handle
+    self.conn = self.initialize_db(self.creds, self._plugins)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/__init__.py", line 159, in initialize_db
+    conn = duckdb.connect(creds.path, read_only=False, config=config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.IOException: IO Error: Could not set lock on file "/home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_data.duckdb": Conflicting lock is held in /home/flocoa/.pyenv/versions/3.12.9/bin/python3.12 (PID 275406). See also https://duckdb.org/docs/stable/connect/concurrency
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 95, in exception_handler
+    yield
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/base/impl.py", line 1372, in execute_macro
+    result = macro_function(**kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt_common/clients/jinja.py", line 427, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt_common/clients/jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 20, in macro
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/clients/jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt_common/clients/jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 50, in macro
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/clients/jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt_common/clients/jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 33, in macro
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/clients/jinja.py", line 82, in __call__
+    return self.call_macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt_common/clients/jinja.py", line 395, in call_macro
+    return macro(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 770, in __call__
+    return self._invoke(arguments, autoescape)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 784, in _invoke
+    rv = self._func(*arguments)
+         ^^^^^^^^^^^^^^^^^^^^^^
+  File "<template>", line 52, in macro
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/sandbox.py", line 401, in call
+    return __context.call(__obj, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/jinja2/runtime.py", line 303, in call
+    return __obj(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt_common/record.py", line 538, in record_replay_wrapper
+    return func_to_record(*call_args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/base/impl.py", line 523, in execute
+    return self.connections.execute(sql=sql, auto_begin=auto_begin, fetch=fetch, limit=limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 130, in execute
+    return super().execute(sql, auto_begin, fetch, limit)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/sql/connections.py", line 219, in execute
+    _, cursor = self.add_query(sql, auto_begin)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/sql/connections.py", line 131, in add_query
+    with self.exception_handler(sql):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 102, in exception_handler
+    self.rollback_if_open()
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/base/connections.py", line 125, in rollback_if_open
+    if conn is not None and conn.handle and conn.transaction_open:
+                            ^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 96, in handle
+    self._handle.resolve(self)
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 120, in resolve
+    return self.opener(connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 53, in open
+    connection.handle = cls._ENV.handle()
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/local.py", line 75, in handle
+    self.conn = self.initialize_db(self.creds, self._plugins)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/__init__.py", line 159, in initialize_db
+    conn = duckdb.connect(creds.path, read_only=False, config=config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.IOException: IO Error: Could not set lock on file "/home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_data.duckdb": Conflicting lock is held in /home/flocoa/.pyenv/versions/3.12.9/bin/python3.12 (PID 275406). See also https://duckdb.org/docs/stable/connect/concurrency
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/requires.py", line 182, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/requires.py", line 276, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/requires.py", line 321, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/requires.py", line 391, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/requires.py", line 368, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/requires.py", line 408, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/cli/main.py", line 211, in build
+    results = task.run()
+              ^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/task/runnable.py", line 626, in run
+    result = self.execute_with_hooks(selected_uids)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/task/runnable.py", line 559, in execute_with_hooks
+    before_run_status = self.before_run(adapter, selected_uids)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/task/run.py", line 1114, in before_run
+    self.create_schemas(adapter, required_schemas)
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/task/runnable.py", line 734, in create_schemas
+    existing_schemas_lowered.update(ls_future.result())
+                                    ^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/home/flocoa/.pyenv/versions/3.12.9/lib/python3.12/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt_common/utils/executor.py", line 16, in connected
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/task/runnable.py", line 709, in list_schemas
+    for s in adapter.list_schemas(database_quoted)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/sql/impl.py", line 219, in list_schemas
+    results = self.execute_macro(LIST_SCHEMAS_MACRO_NAME, kwargs={"database": database})
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/base/impl.py", line 1371, in execute_macro
+    with self.connections.exception_handler(f"macro {macro_name}"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 102, in exception_handler
+    self.rollback_if_open()
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/base/connections.py", line 125, in rollback_if_open
+    if conn is not None and conn.handle and conn.transaction_open:
+                            ^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 96, in handle
+    self._handle.resolve(self)
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/contracts/connection.py", line 120, in resolve
+    return self.opener(connection)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/connections.py", line 53, in open
+    connection.handle = cls._ENV.handle()
+                        ^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/local.py", line 75, in handle
+    self.conn = self.initialize_db(self.creds, self._plugins)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dbt/adapters/duckdb/environments/__init__.py", line 159, in initialize_db
+    conn = duckdb.connect(creds.path, read_only=False, config=config)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_duckdb.IOException: IO Error: Could not set lock on file "/home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_data.duckdb": Conflicting lock is held in /home/flocoa/.pyenv/versions/3.12.9/bin/python3.12 (PID 275406). See also https://duckdb.org/docs/stable/connect/concurrency
+
+
+Stack Trace:
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster/_core/execution/plan/execute_plan.py", line 243, in dagster_event_sequence_for_step
+    yield from check.generator(step_events)
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster/_core/execution/plan/execute_step.py", line 505, in core_dagster_event_sequence_for_step
+    for user_event in _step_output_error_checked_user_event_sequence(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster/_core/execution/plan/execute_step.py", line 184, in _step_output_error_checked_user_event_sequence
+    for user_event in user_event_sequence:
+                      ^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster/_core/execution/plan/execute_step.py", line 88, in _process_asset_results_to_events
+    for user_event in user_event_sequence:
+                      ^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster/_core/execution/plan/compute.py", line 188, in execute_core_compute
+    for step_output in _yield_compute_results(step_context, inputs, compute_fn, compute_context):
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster/_core/execution/plan/compute.py", line 157, in _yield_compute_results
+    for event in iterate_with_context(
+                 ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster/_utils/__init__.py", line 394, in iterate_with_context
+    next_output = next(iterator)
+                  ^^^^^^^^^^^^^^
+  File "/home/flocoa/code/Projets/projet_duck-db_dagster_dbt/sncf_dagster/assets.py", line 41, in sncf_dbt_assets
+    yield from dbt.cli(["build"], context=context).stream()
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster_dbt/core/dbt_event_iterator.py", line 217, in __next__
+    return next(self._inner_iterator)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster_dbt/core/dbt_cli_invocation.py", line 286, in _stream_asset_events
+    for event in self.stream_raw_events():
+                 ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster_dbt/core/dbt_cli_invocation.py", line 379, in stream_raw_events
+    self._raise_on_error()
+  File "/home/flocoa/.pyenv/versions/3.12.9/envs/lewagon/lib/python3.12/site-packages/dagster_dbt/core/dbt_cli_invocation.py", line 470, in _raise_on_error
+    raise error
+[0m
