@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "projet_duck-db_dagster_dbt"
+version = "0.1.0"
+description = "Pipeline ELT SNCF avec DuckDB, dbt et Dagster"
+dependencies = [
+    "dagster",
+    "dagster-dbt",
+    "dbt-duckdb",
+    "pandas",
+    "requests"
+]
